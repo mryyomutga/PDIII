@@ -1,0 +1,10 @@
+body {
+	font-family: "メイリオ", "Meiryo", sans-serif;
+	background-color: #AAAAFF;
+}
+p {
+	background-color: #FFFFFF;
+	color: black;
+	align-content: center;
+	border: solid 1px #555555;
+}

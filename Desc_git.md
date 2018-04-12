@@ -88,6 +88,12 @@ GitHubでリポジトリを作成するときは、`New repository`でリポジ�
 |git pull|リモートリポジトリの変更をローカルに反映させる|
 |git push|ローカルリポジトリの変更をリモートリポジトリに反映させる|
 
+`git add`のオプション
+
+|コマンド|説明|
+|:---|:---|
+|git add * またはgit add -A|リポジトリ内のすべてのファイルを管理対象に加える(何も考えずにやるならこれ)|
+|git add -u|変更があったものだけステージングエリアに移す（追加したものは管理対象にならない）|
 
 ### 設定用のコマンド
 |コマンド|説明|
@@ -102,15 +108,11 @@ GitHubでリポジトリを作成するときは、`New repository`でリポジ�
 |git config --global color.branch auto|branchの色設定|
 |git config --global http.proxy address:port|プロキシ設定|
 
-`git add`のオプション
-|コマンド|説明|
-|:---|:---|
-|git add * またはgit add -A|リポジトリ内のすべてのファイルを管理対象に加える(何も考えずにやるならこれ)|
-|git add -u|変更があったものだけステージングエリアに移す（追加したものは管理対象にならない）|
-
 `--global`オプションはシステム全体で設定する場合につける
 
 リポジトリごとに設定をしたい場合は`--local`をつけると良い(例えばプロキシの設定)
+
+設定を削除したい場合`--unset`オプションをつける
 
 最低限設定しておくと良いコマンド
 ```bash
@@ -121,4 +123,14 @@ $ git config --global core.quotepath false
 $ git config --global color.diff auto
 $ git config --global color.status auto
 $ git config --global color.branch auto
+```
+
+### pushしたときに名前とパスワードが聞かれる時の対処
+
+`~/.netrc`ファイルに以下の内容を書き込むだけで良いらしい
+
+```
+machine github.com
+login myname
+password xxxxxxxxxx
 ```
