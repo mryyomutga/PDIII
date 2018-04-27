@@ -1,0 +1,39 @@
+RPLidar A2
+
+ROSをインストールする
+$ source /opt/ros/kinetic/setup.zsh
+
+catkinワークスペースの作成
+$ mkdir -p ~/catkin_ws/src
+$ cd ~/catkin_ws/src
+$ catkin_init_workspace
+
+-> catkin_ws配下にdevel, buildディレクトリが作成される
+
+GitHubにあるrplidar_rosをsrc配下にcloneする
+$ git clone https://github.com/robpeak/rplidar_ros.git
+$ cd ~/catkin_ws
+
+コマンドを使えるようにする
+$ source devel/setup.zsh
+
+ビルドする
+$ catkin_make
+
+サンプルを実行する場合
+PCに接続されたRPLidarのデバイスファイルを調べる
+	通常は/dev/ttyUSB0がRPLidar
+$ ls -l /dev | grep ttyUSB
+
+USBデバイスのパーミッションを変更する
+chmod 666 /dev/ttyUSB0
+
+以下のコマンドを実行する
+$ cd ~/catkin_ws
+$ roslaunch rplidar_ros rplidar.launch
+	-> RPLidarがセンサリングを開始する
+$ rosrun rplidar_ros rplidarNodeClient
+	-> RPLidarが取得した情報をコンソール上に表示する
+$ roslaunch rplidar_ros view_rplidar.launch
+	-> RPlidarが取得した情報をグラフィカルに表示する
+
