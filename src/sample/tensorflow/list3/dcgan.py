@@ -182,7 +182,7 @@ with tf.Session() as sess:
 
         if i % 100 == 0:
             img = sess.run(output_img)
-            with open(os.path.join(os.path.dirname(__file__), "{:05d}.png".format(i)), "wb") as f:
+            with open(os.path.join(os.path.dirname(__file__), "dcgan_img/{:05d}.png".format(i)), "wb") as f:
                 f.write(img)
     coord.request_stop()
     coord.join(threads)
