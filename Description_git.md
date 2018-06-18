@@ -1,4 +1,4 @@
-# Desc_git
+# Description git
 バージョン管理ツールGit,GitHubの使い方
 
 ## Gitとは？
@@ -134,3 +134,55 @@ machine github.com
 login myname
 password xxxxxxxxxx
 ```
+
+## ブランチを切って作業する
+
+masterブランチをそのまま編集してコミットしていくのはあまり良くない
+
+開発フローは色々あるがチームで好きなものを決めて開発するとよい(個人的には`GitFlow`)
+
+Gitサーバとか構築してるなら`GitFlow`モデルが良いと思われる
+
+1. 開発用ブランチ(`develop`が多い)を切ってそこで作業する
+    - 基本的に`develop`は`feature`のmerge commitだけにしたほうがいいらしい
+
+1. 個別の機能を開発する場合は`feature/1`,`feature-1`などつけてそこで実装する
+
+1. `feature`で実装したら`develop`にcheckoutしてmergeする
+
+---
+GitHubを使って開発する場合
+
+Githubを使う場合は`Github Flow`なる開発フローがいいらしい
+
+1. Github上に空のリポジトリを作成
+
+1. 作成したリポジトリをcloneする
+
+1. `develop`ブランチを切る
+
+1. 機能追加する場合`feature`ブランチを切って開発
+
+1. 実装できたら`develop`ブランチにmerge
+
+1. 安定版がリリースできたら`master`ブランチにmerge
+
+### ブランチ操作
+
+|コマンド|説明|
+|:---|:---|
+|git branch|ブランチの一覧を表示|
+|git branch `branch-name`|ブランチの作成|
+|git branch -d `branch-name`|指定したブランチの削除|
+|git branch -m `old-branch` `new-branch`|ブランチ名を変更する|
+|git branch -m `new-branch`|現在のブランチ名を変更する|
+|git checkout `branch-name`|指定したブランチに移動|
+|git checkout -b `branch-name`|ブランチを作成してcheckout|
+|git merge `branch`|現在のブランチに指定したブランチをマージ|
+
+
+### 参考
+
+- [サルでもわかるGit入門 ~バージョン管理を使いこなそう~](https://backlog.com/ja/git-tutorial/)
+- [【初心者向け】gitのbranch運用入門【git flow もどき】 ](http://ism1000ch.hatenablog.com/entry/2014/03/31/152441)
+- [Gitを使った有名な開発フロー、GitFlowとGitHub Flowについて ](https://2017.l2tp.org/archives/470)  
