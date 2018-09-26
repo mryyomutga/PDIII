@@ -16,10 +16,12 @@ int main(int argc, const char *argv[]) {
     sa.sin_addr.s_addr = inet_addr("0.0.0.0");
 
     bind(sock, (struct sockaddr *)&sa, sizeof(sa));
+
+    char buffer[2048];
     while(1) {
-        char buffer[2048];
         int recv_size = recvfrom(sock, buffer, 2048, 0, NULL, NULL);
-        printf("%d %s\n",recv_size, buffer);
+        printf("%s\n", buffer);
+        memset(buffer, '\0', sizeof(buffer));
     }
     close(sock);
 
