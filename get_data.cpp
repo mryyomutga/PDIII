@@ -17,9 +17,9 @@ int main(int argc, const char *argv[]) {
 
     bind(sock, (struct sockaddr *)&sa, sizeof(sa));
 
-    char buffer[2048];
+    char buffer[1024];
     while(1) {
-        int recv_size = recvfrom(sock, buffer, 2048, 0, NULL, NULL);
+        int recv_size = recvfrom(sock, buffer, 1024, 0, NULL, NULL);
         printf("%s\n", buffer);
         memset(buffer, '\0', sizeof(buffer));
     }

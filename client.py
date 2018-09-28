@@ -1,4 +1,5 @@
 # -*- coding:utf-8 -*-
+import sys
 import socket
 import json
 import threading
@@ -10,74 +11,41 @@ import concurrent.futures
 import csv
 
 success_recv_data = False  # 接続成功フラグ
-data = {"begin":False, "theta":0, "length":0}        # LIDARデータ
-# data = dict()
+# data = {"begin":False, "theta":0, "length":0}        # LIDARデータ
+lidar_datas = list()
 # queue = list()
+
 def get_data():
-    lock = threading.Lock()
-    with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as sock:
-        sock.bind(("0.0.0.0",8888))
+
+    # addr = sys.argv[1]
+    # print(addr)
+    # lock = threading.Lock()
+    with socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP) as sock:
+        sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 0)
+        sock.bind(("0.0.0.0", 8888))
         print(sock)
 
-        cnt = 0
+        # cnt = 0
         success_recv_data = True
         # print("a")
 
-        mapping_th  = threading.Thread(target=mapping)
-        mapping_th.start()
+        # print_data_th = threading.Thread(target=print_data)
+        # print_data_th.setDaemon(True)
+        # print_data_th.start()
+
         while True:
-            res, addr = sock.recvfrom(1024)
+            res, addr = sock.recvfrom(2048)
             res = res.decode("utf-8")
             res = json.loads(res)
-            print(res, type(res))
-            # lock.acquire()
-            data["begin"] = res["begin"]
-            data["theta"] = res["theta"]
-            data["length"] = res["length"]
-            # print("response : ", res)
-            # print("data     : ", data)
-            # if res["begin"]:
-            #     print("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-            # print("-" * 55)
-            # print(res == data)
-
-            # lock.release()
-            # data.clear()
-            # queue.append(res)
-            # print(type(res))
-            # print(data)
-            # start_flag = res["begin"]
-            # redumps = {"theta":res["theta"], "len":res["len"]}
-            # data.update({"begin":res["begin"], "length":res["len"], "theta":res["theta"]})
-            # if start_flag:
-            #     data.append(redumps)
-            # data.append(json.loads(res))
-            # if success_recv_data:
-
-            # cnt += 1
-            # print(res)
-            # time.sleep(0.1)
-            del res, addr
-
-        # begin = [v.get("begin") for v in data]
-        # print(begin)
+            # print(res, type(res))
+            lidar_datas.append(np.array([res["begin"], res["theta"], res["length"]]))
 
 x, y = list(), list()
 
 def mapping():
-    lock = threading.Lock()
-    # time.sleep(3)
     fig = plt.figure()
-    # print(data, type(data))
-    # print(queue)
-    # data = queue.pop(0)
-    # print(data)
     while True:
-        # print(data)
-        # print(data,data["begin"])
-        # lock.acquire()
-        # print(data)
-        if data["begin"]:
+        if len(a):
             plt.cla()
             plt.scatter(x, y, marker=".", color="#7777FF")
             x.clear()
@@ -106,15 +74,23 @@ def mapping():
             # time.sleep(0.1)
 
 
+def print_data():
+    while True:
+        print(lidar_datas)
 
 if __name__ == "__main__":
 
     get_data_th = threading.Thread(target=get_data)
+    # mapping_th  = threading.Thread(target=mapping)
 
 
     # get_data_th.setDaemon(True)
     # mapping_th.setDaemon(True)
+
+
     get_data_th.start()
+    # mapping_th.start()
+
 
     # if connect_success:
     # get_data_th.join()
