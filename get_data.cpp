@@ -1,3 +1,6 @@
+/*
+ * Last Change: Fri 28 Sep 2018 17:03:16.
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
