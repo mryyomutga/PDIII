@@ -1,5 +1,5 @@
 /*
- * Last Change: Fri 28 Sep 2018 17:03:16.
+ * Last Change: Wed 03 Oct 2018 18:06:59.
  */
 #include <stdio.h>
 #include <stdlib.h>
@@ -20,9 +20,9 @@ int main(int argc, const char *argv[]) {
 
     bind(sock, (struct sockaddr *)&sa, sizeof(sa));
 
-    char buffer[1024];
+    char buffer[2048];
     while(1) {
-        int recv_size = recvfrom(sock, buffer, 1024, 0, NULL, NULL);
+        int recv_size = recvfrom(sock, buffer, 2048, 0, NULL, NULL);
         printf("%s\n", buffer);
         memset(buffer, '\0', sizeof(buffer));
     }
