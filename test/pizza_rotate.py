@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import time
 cv2.namedWindow('demo', cv2.WINDOW_NORMAL | cv2.WINDOW_GUI_NORMAL)
-cv2.resizeWindow('demo', 640,640)
+cv2.resizeWindow('demo', 700,700)
 
 image = np.ones((700, 700, 3), np.uint8)*100
 
@@ -18,6 +18,7 @@ while True:
     cv2.circle(image, pt1, 10, (255,255,255), -1)
     triangle_cnt = np.array( [pt1, pt2, pt3] )
 
+    print(triangle_cnt, type(triangle_cnt[0][0]))
     cv2.drawContours(image, [triangle_cnt], 0, (0,0,0), -1)
     cv2.drawContours(image, [triangle_cnt], 0, (30,30,30), 2)
 
