@@ -1,23 +1,39 @@
 # -*- coding:utf-8 -*-
 # Last Change : Thu 01 Nov 2018 01:31:15.
-import socket
 import json
+import socket
 import threading
 
 import cv2
 
+
 # {"range":float,"angle":float,"radian":float,"x":float,"y":float}
 class MapDrawCoutours(object):
     '''recv map data and draw map'''
+
     def __init__(self):
         '''constractor'''
         # self.x = [0 for i in range(360)]
         # self.y = [0 for i in range(360)]
-        self.current_data = [{"idx":0, "range":0, "angle":0, "radian":0, "x":0, "y":0}]
-        self.max_data     = [{"idx":0, "range":0, "angle":0, "radian":0, "x":0, "y":0}]
+        self.current_data = [{
+            "idx": 0,
+            "range": 0,
+            "angle": 0,
+            "radian": 0,
+            "x": 0,
+            "y": 0
+        }]
+        self.max_data = [{
+            "idx": 0,
+            "range": 0,
+            "angle": 0,
+            "radian": 0,
+            "x": 0,
+            "y": 0
+        }]
 
         self.recv_map_data_th = threading.Thread(target=self.recv_map_data)
-        self.draw_map_th      = threading.Thread(target=self.draw_map)
+        self.draw_map_th = threading.Thread(target=self.draw_map)
 
         self.draw_map_th.setDaemon(True)
 
@@ -28,7 +44,8 @@ class MapDrawCoutours(object):
 
     def recv_map_data(self):
         '''create UDP socket and recv map datas from server(Robot)'''
-        with socket.socket(socket.AF_INET, socket.SOCK_DGRAM, socket.IPPROTO_UDP) as sock:
+        with socket.socket(socket.AF_INET, socket.SOCK_DGRAM,
+                           socket.IPPROTO_UDP) as sock:
             sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEPORT, 0)
             sock.bind(("0.0.0.0", 8888))
 
@@ -61,5 +78,5 @@ class MapDrawCoutours(object):
 
 if __name__ == "__main__":
 
-    slam = SLAM()
+    slam = MapDrawCoutours()
     slam.run()
