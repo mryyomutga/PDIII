@@ -1,3 +1,4 @@
 __pycache__
 map_data/*
+paper/*
 !map_data/dummy_map.json
