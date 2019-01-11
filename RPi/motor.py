@@ -1,11 +1,25 @@
 # -*- coding: utf-8 -*-
-# Last Change : Wed 26 Dec 2018 20:55:37.
+# Last Change : Fri 11 Jan 2019 18:12:01.
+
+import time
 import pigpio
+
+# default Motor dir = 0
+#  wheel2           wheel3
+#         +-------+
+#         |       |   ^
+#     | - |       | - |
+#     v   |       |
+#         |       |   ^
+#     | - |       | - |
+#     v   |       |
+#         +-------+
+#  wheel1           wheel4
 
 class Motor(object):
     """Motor Class"""
-    pi = pigpio.pi()
-    def __init__(self, pwm_pin=3, dir_pin=2):
+    pi = pigpio.pi("192.168.200.1")
+    def __init__(self, pwm_pin=20, dir_pin=26):
         """constructor"""
         self.pwm_pin = pwm_pin
         self.dir_pin = dir_pin
@@ -34,6 +48,7 @@ class Motor(object):
         self.pi.set_PWM_dutycycle(self.pwm_pin, duty)
 
     def set_direction(self, direction=1):
+        """set direction"""
         self.pi.write(self.dir_pin, direction)
         self.direction = direction
 
@@ -55,35 +70,9 @@ class Motor(object):
         return self.duty
 
     def get_direction(self, direction=1):
+        """get direction"""
         return direction
 
-class MotorControl(object):
-    def __init__(self):
-        self.M1 = Motor(20, 26)
-        self.M2 = Motor(16, 19)
-        self.M3 = Motor(12, 6 )
-        self.M4 = Motor(17, 18)
+if __name__ == '__main__':
+    pass
 
-    def set_frequency_all(self):
-        self.M1.set_frequency()
-        self.M2.set_frequency()
-        self.M3.set_frequency()
-        self.M4.set_frequency()
-
-    def set_dutycycle_all(self):
-        self.M1.set_duty(40)
-        self.M2.set_duty(33)
-        self.M3.set_duty(40)
-        self.M4.set_duty(40)
-
-    def set_direction_all(self):
-        self.M1.set_direction(1)
-        self.M2.set_direction(1)
-        self.M3.set_direction(0)
-        self.M4.set_direction(0)
-
-    def stop_motor(self):
-        self.M1.set_duty(0)
-        self.M2.set_duty(0)
-        self.M3.set_duty(0)
-        self.M4.set_duty(0)
