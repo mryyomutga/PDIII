@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Last Change : Fri 11 Jan 2019 20:26:42.
+# Last Change : Fri 18 Jan 2019 15:11:56.
 
 import time
 import pigpio
@@ -7,16 +7,16 @@ import pigpio
 from motor import Motor  # import Motor class
 
 # default Motor dir = 0
-#  wheel4           wheel1
+#  wheel2           wheel3
 #         +-------+
-#     ^   |       |
+#         |       |   ^
 #     | - |       | - |
-#         |       |   v
-#     ^   |       |
+#     v   |       |
+#         |       |   ^
 #     | - |       | - |
-#         +-------+   v
-#  wheel3           wheel2
-
+#     v   |       |
+#         +-------+
+#  wheel1           wheel4
 
 class MotorControl(object):
     def __init__(self):
@@ -24,7 +24,7 @@ class MotorControl(object):
         self.wheel1 = Motor(20, 26)
         self.wheel2 = Motor(16, 19)
         self.wheel3 = Motor(12, 6 )
-        self.wheel4 = Motor(17, 18)
+        self.wheel4 = Motor(18, 17)
         self.set_car_frequency()
 
     def set_wheel_frequency(self, wheel, freq=1000):
@@ -38,11 +38,11 @@ class MotorControl(object):
         wheel.set_frequency(freq)
         return wheel.get_frequency()
 
-    def set_wheel_dutycycle(self, wheel, duty=40):
+    def set_wheel_dutycycle(self, wheel, duty=30):
         """set wheel dutycycle
            Args:
                 motor:motorN
-                duty:wheel duty (default=40)
+                duty:wheel duty (default=30)
            Return:
                 motor duty
         """
