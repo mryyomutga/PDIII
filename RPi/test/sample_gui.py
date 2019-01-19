@@ -77,6 +77,4 @@ if __name__ == '__main__':
     Checkbutton(myframe, text="M4 DIR reverse", font=("Monospace", 20), variable=dir4).pack()
 
     myframe.mainloop()
-if __name__ == '__main__':
-    pass
 
