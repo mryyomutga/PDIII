@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-# Last Change : Sat 19 Jan 2019 04:42:58.
+# Last Change : Mon 21 Jan 2019 03:21:06.
 # データサイズを可変長にしてjsonにdump,plotする
 
 import os
@@ -302,78 +302,78 @@ class Client(object):
             '''
 
             # 地図データのファイルリストを取得
-            # maplist = glob.glob("map_data[0-9]*.json")
-            # maplist.sort()
-            # print(maplist)
-            #
-            # cv2.rectangle(image, (pt0[0] + int(2   * self.block), pt0[1] - int(5  * self.block)), (pt0[0] + int(16 * self.block), pt0[1] - int(-15 * self.block)), (78,78,78), thickness=3, lineType=cv2.LINE_AA)
-            # cv2.rectangle(image, (pt0[0] + int(-13 * self.block), pt0[1] - int(5  * self.block)), (pt0[0]                       , pt0[1] - int(-15 * self.block)), (78,78,78), thickness=3, lineType=cv2.LINE_AA)
-            # cv2.rectangle(image, (0                             , pt0[1] - int(14 * self.block)), (mapsize[0]                   , pt0[1] - int(7   * self.block)), (78,78,78), thickness=3, lineType=cv2.LINE_AA)
-            #
-            # # センサーの計測位置表示用座標リスト
-            # senser_points = list()
-            #
-            # for filename in maplist:
-            #     with open(filename, "r") as f:
-            #         mapdata = json.load(f)
-            #         # センサー座標系の原点を地図座標系に変換
-            #         pt1 = (int(mapdata["origin"]["x"] * self.block) + pt0[0], int(-mapdata["origin"]["y"] * self.block) + pt0[1])
-            #         print(pt1)
-            #         senser_points.append(pt1)
-            #
-            #         data = mapdata["data"]   # 座標Pにおけるセンサーデータの取得
-            #         max_idx = len(data) - 1
-            #
-            #         def rotate_pos(pos, deg):
-            #             '''座標posを指定した角度だけ回転した座標を取得'''
-            #             radian = np.radians(deg)
-            #             rc = np.cos(radian)
-            #             rs = np.sin(radian)
-            #             # 回転行列の生成
-            #             rot_mat = np.array([[rc, -rs], [rs, rc]])
-            #             ret = np.dot(rot_mat, pos)
-            #             return ret
-            #
-            #         # 各偏角とセンサー座標を頂点とする三角形を描画する
-            #         for idx in range(len(data)):
-            #             if idx == max_idx:
-            #                 p2_pos = np.array([[ data[idx]["x"] ], [ data[idx]["y"] ]])
-            #                 p3_pos = np.array([[ data[0]["x"]   ], [ data[0]["y"]   ]])
-            #                 p2 = rotate_pos(p2_pos, rot_deg)
-            #                 p3 = rotate_pos(p3_pos, rot_deg)
-            #
-            #                 pt2 = [int(p2[0] / self.scale) + pt1[0], -int(p2[1] / self.scale) + pt1[1]]
-            #                 pt3 = [int(p3[0] / self.scale) + pt1[0], -int(p3[1] / self.scale) + pt1[1]]
-            #             else:
-            #                 p2_pos = np.array([[ data[idx]["x"]     ], [ data[idx]["y"]     ]])
-            #                 p3_pos = np.array([[ data[idx + 1]["x"] ], [ data[idx + 1]["y"] ]])
-            #                 p2 = rotate_pos(p2_pos, rot_deg)
-            #                 p3 = rotate_pos(p3_pos, rot_deg)
-            #
-            #                 pt2 = [int(p2[0] / self.scale) + pt1[0], -int(p2[1] / self.scale) + pt1[1]]
-            #                 pt3 = [int(p3[0] / self.scale) + pt1[0], -int(p3[1] / self.scale) + pt1[1]]
-            #
-            #             def convert_data(point):
-            #                 '''データを地図に合わせる
-            #                    convert list to tuple
-            #                 '''
-            #                 # if point[0] > mapsize[0]:
-            #                 #     point[0] = mapsize[0]
-            #                 # if point[1] > mapsize[1]:
-            #                 #     point[1] = mapsize[1]
-            #                 return tuple(point)
-            #
-            #             pt2 = convert_data(pt2)
-            #             pt3 = convert_data(pt3)
-            #
-            #             triangle_cnt = np.array([pt1, pt2, pt3], dtype=np.int32)
-            #
-            #             cv2.drawContours(image, [triangle_cnt], 0, self.color["WHITE"], -1)
-            #
-            #             if (pt1[0] == pt2[0] and pt1[1] == pt2[1]) or (pt1[0] == pt3[0] and pt1[1] == pt3[1]):
-            #                 pass
-            #             else:
-            #                 cv2.line(image, pt2, pt3, self.color["RED"], 2)
+            maplist = glob.glob("map_data[0-9]*.json")
+            maplist.sort()
+            print(maplist)
+            
+            cv2.rectangle(image, (pt0[0] + int(2   * self.block), pt0[1] - int(5  * self.block)), (pt0[0] + int(16 * self.block), pt0[1] - int(-15 * self.block)), (78,78,78), thickness=3, lineType=cv2.LINE_AA)
+            cv2.rectangle(image, (pt0[0] + int(-13 * self.block), pt0[1] - int(5  * self.block)), (pt0[0]                       , pt0[1] - int(-15 * self.block)), (78,78,78), thickness=3, lineType=cv2.LINE_AA)
+            cv2.rectangle(image, (0                             , pt0[1] - int(14 * self.block)), (mapsize[0]                   , pt0[1] - int(7   * self.block)), (78,78,78), thickness=3, lineType=cv2.LINE_AA)
+            
+            # センサーの計測位置表示用座標リスト
+            senser_points = list()
+            
+            for filename in maplist:
+                with open(filename, "r") as f:
+                    mapdata = json.load(f)
+                    # センサー座標系の原点を地図座標系に変換
+                    pt1 = (int(mapdata["origin"]["x"] * self.block) + pt0[0], int(-mapdata["origin"]["y"] * self.block) + pt0[1])
+                    print(pt1)
+                    senser_points.append(pt1)
+            
+                    data = mapdata["data"]   # 座標Pにおけるセンサーデータの取得
+                    max_idx = len(data) - 1
+            
+                    def rotate_pos(pos, deg):
+                        '''座標posを指定した角度だけ回転した座標を取得'''
+                        radian = np.radians(deg)
+                        rc = np.cos(radian)
+                        rs = np.sin(radian)
+                        # 回転行列の生成
+                        rot_mat = np.array([[rc, -rs], [rs, rc]])
+                        ret = np.dot(rot_mat, pos)
+                        return ret
+            
+                    # 各偏角とセンサー座標を頂点とする三角形を描画する
+                    for idx in range(len(data)):
+                        if idx == max_idx:
+                            p2_pos = np.array([[ data[idx]["x"] ], [ data[idx]["y"] ]])
+                            p3_pos = np.array([[ data[0]["x"]   ], [ data[0]["y"]   ]])
+                            p2 = rotate_pos(p2_pos, rot_deg)
+                            p3 = rotate_pos(p3_pos, rot_deg)
+            
+                            pt2 = [int(p2[0] / self.scale) + pt1[0], -int(p2[1] / self.scale) + pt1[1]]
+                            pt3 = [int(p3[0] / self.scale) + pt1[0], -int(p3[1] / self.scale) + pt1[1]]
+                        else:
+                            p2_pos = np.array([[ data[idx]["x"]     ], [ data[idx]["y"]     ]])
+                            p3_pos = np.array([[ data[idx + 1]["x"] ], [ data[idx + 1]["y"] ]])
+                            p2 = rotate_pos(p2_pos, rot_deg)
+                            p3 = rotate_pos(p3_pos, rot_deg)
+            
+                            pt2 = [int(p2[0] / self.scale) + pt1[0], -int(p2[1] / self.scale) + pt1[1]]
+                            pt3 = [int(p3[0] / self.scale) + pt1[0], -int(p3[1] / self.scale) + pt1[1]]
+            
+                        def convert_data(point):
+                            '''データを地図に合わせる
+                               convert list to tuple
+                            '''
+                            # if point[0] > mapsize[0]:
+                            #     point[0] = mapsize[0]
+                            # if point[1] > mapsize[1]:
+                            #     point[1] = mapsize[1]
+                            return tuple(point)
+            
+                        pt2 = convert_data(pt2)
+                        pt3 = convert_data(pt3)
+            
+                        triangle_cnt = np.array([pt1, pt2, pt3], dtype=np.int32)
+            
+                        cv2.drawContours(image, [triangle_cnt], 0, self.color["WHITE"], -1)
+            
+                        if (pt1[0] == pt2[0] and pt1[1] == pt2[1]) or (pt1[0] == pt3[0] and pt1[1] == pt3[1]):
+                            pass
+                        else:
+                            cv2.line(image, pt2, pt3, self.color["RED"], 2)
 
             # show map origin
             cv2.drawMarker(image, (pt0[0], pt0[1]), self.color["RED"], markerType=cv2.MARKER_STAR, markerSize=30, thickness=3, line_type=cv2.LINE_AA)
@@ -387,8 +387,8 @@ class Client(object):
             cv2.rectangle(image, (pt0[0] + int(0 * self.block-2), pt0[1] - int(6  * self.block)), (pt0[0] + int(-13 * self.block), pt0[1] - int(-15 * self.block)), self.color["BLACK"], thickness=3, lineType=cv2.LINE_AA)
             cv2.rectangle(image, (0                             , pt0[1] - int(15 * self.block)), (mapsize[0]                   , pt0[1] - int(7   * self.block)), self.color["BLACK"], thickness=3, lineType=cv2.LINE_AA)
             # show sensing point
-            # for p in senser_points:
-            #     cv2.drawMarker(image, p, (128,255,64), markerType=cv2.MARKER_TILTED_CROSS, markerSize=30, thickness=3, line_type=cv2.LINE_AA)
+            for p in senser_points:
+                cv2.drawMarker(image, p, (128,255,64), markerType=cv2.MARKER_TILTED_CROSS, markerSize=30, thickness=3, line_type=cv2.LINE_AA)
 
         def draw_map(mapsize, rot_deg, filename):
             '''ファイル名を1つ指定して描画する'''

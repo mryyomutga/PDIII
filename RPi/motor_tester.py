@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
-# Last Change : Sat 19 Jan 2019 17:18:55.
+# Last Change : Mon 21 Jan 2019 16:12:10.
 
 import motor_control as ctl
 from tkinter import *
 
 ct = ctl.MotorControl()
+
+fnt=("Noto Sans CJK JP", 14)
 
 def motor1_dir_callback(*args):
     if dir1.get() == True:
@@ -46,14 +48,11 @@ def motor4_duty_callback(*args):
     duty = duty4.get()
     ct.set_wheel_dutycycle(wheel=ct.wheel4, duty=duty)
 
-
-fnt=("Noto Sans CJK JP", 14)
-
 if __name__ == '__main__':
     myframe = Tk()
+    myframe.title("Motor Tester")
 
     ## Frames
-
     f0=LabelFrame(myframe, text='Front', bd=4, font=fnt, labelanchor = N)
     f0.pack()
 

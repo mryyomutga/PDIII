@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Last Change : Sat 19 Jan 2019 17:15:41.
+# Last Change : Mon 21 Jan 2019 16:11:11.
 
 from tkinter import *
 
@@ -31,10 +31,11 @@ def motor4_duty_callback(*args):
 fnt=("Noto Sans CJK JP", 14)
 
 if __name__ == '__main__':
+    # Tk frame
     myframe = Tk()
+    myframe.title("Motor Tester")
 
     ## Frames
-
     f0=LabelFrame(myframe, text='Front', bd=4, font=fnt, labelanchor = N)
     f0.pack()
 
