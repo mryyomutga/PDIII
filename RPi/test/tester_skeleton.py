@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Last Change : Mon 21 Jan 2019 16:11:11.
+# Last Change : Tue 22 Jan 2019 20:55:48.
 
 from tkinter import *
 
@@ -27,6 +27,8 @@ def motor3_duty_callback(*args):
 def motor4_duty_callback(*args):
     pass
 
+def motor_state(*args):
+    pass
 
 fnt=("Noto Sans CJK JP", 14)
 
@@ -36,13 +38,21 @@ if __name__ == '__main__':
     myframe.title("Motor Tester")
 
     ## Frames
-    f0=LabelFrame(myframe, text='Front', bd=4, font=fnt, labelanchor = N)
+    f0=LabelFrame(myframe, text='Motor State Control', padx=52, bd=4, font=fnt, labelanchor = N)
     f0.pack()
 
-    f1=LabelFrame(myframe, text='Back', bd=4, font=fnt, labelanchor = N)
+    f1=LabelFrame(myframe, text='Front', bd=4, font=fnt, labelanchor = N)
     f1.pack()
 
+    f2=LabelFrame(myframe, text='Back', bd=4, font=fnt, labelanchor = N)
+    f2.pack()
+
     ### SubFrames
+    state = BooleanVar()
+    state.set(True)
+    Checkbutton(f0, text="Stop All Motors", font=fnt, variable=state, command=motor_state).pack()
+
+
     #### Motor2
     duty2 = IntVar()
     duty2.trace("w", motor2_duty_callback)
@@ -51,7 +61,7 @@ if __name__ == '__main__':
     dir2.trace("w", motor2_dir_callback)
     dir2.set(False)
 
-    f01=LabelFrame(f0, text='Motor2 Duty', bd=2, font=fnt)
+    f01=LabelFrame(f1, text='Motor2 Duty', bd=2, font=fnt)
     f01.pack(side='left')
     Checkbutton(f01, text="DIR reverse", font=fnt, variable=dir2).pack()
     Scale(f01, font=fnt,orient=HORIZONTAL, variable=duty2, from_=0, to=100).pack()
@@ -64,7 +74,7 @@ if __name__ == '__main__':
     dir3.trace("w", motor3_dir_callback)
     dir3.set(False)
 
-    f02=LabelFrame(f0, text='Motor3 Duty', bd=2, font=fnt)
+    f02=LabelFrame(f1, text='Motor3 Duty', bd=2, font=fnt)
     f02.pack(side='left')
     Checkbutton(f02, text="DIR reverse", font=fnt, variable=dir3).pack()
     Scale(f02, font=fnt, orient=HORIZONTAL, variable=duty3, from_=0, to=100).pack()
@@ -77,7 +87,7 @@ if __name__ == '__main__':
     dir1.trace("w", motor1_dir_callback)
     dir1.set(False)
 
-    f11=LabelFrame(f1, text='Motor1 Duty', bd=2, font=fnt)
+    f11=LabelFrame(f2, text='Motor1 Duty', bd=2, font=fnt)
     f11.pack(side='left')
     Checkbutton(f11, text="DIR reverse", font=fnt, variable=dir1).pack()
     Scale(f11, font=fnt, orient=HORIZONTAL, variable=duty1, from_=0, to=100).pack()
@@ -90,7 +100,7 @@ if __name__ == '__main__':
     dir4.trace("w", motor4_dir_callback)
     dir4.set(False)
 
-    f12=LabelFrame(f1, text='Motor4 Duty', bd=2, font=fnt)
+    f12=LabelFrame(f2, text='Motor4 Duty', bd=2, font=fnt)
     f12.pack(side='left')
     Checkbutton(f12, text="DIR reverse", font=fnt, variable=dir4).pack()
     Scale(f12, font=fnt, orient=HORIZONTAL, variable=duty4, from_=0, to=100).pack()

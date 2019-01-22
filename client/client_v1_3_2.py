@@ -1,5 +1,5 @@
 # -*- coding:utf-8 -*-
-# Last Change : Mon 21 Jan 2019 03:21:06.
+# Last Change : Tue 22 Jan 2019 21:27:17.
 # データサイズを可変長にしてjsonにdump,plotする
 
 import os
@@ -382,13 +382,13 @@ class Client(object):
                 cv2.line(image, (0, _line), (mapsize[0], _line), (120,120,120), 3)
                 cv2.line(image, (_line ,0), (_line, mapsize[1]), (120,120,120), 3)
             # 67-322
-            cv2.rectangle(image, (pt0[0] + int(0 * self.block), pt0[1] - int(6  * self.block)), (pt0[0] + int(13 * self.block), pt0[1] - int(-15 * self.block)), self.color["BLACK"], thickness=3, lineType=cv2.LINE_AA)
+            cv2.rectangle(image, (pt0[0] + int(0 * self.block), pt0[1] - int(6  * self.block)), (pt0[0] + int(13 * self.block), pt0[1] - int(-15 * self.block)), self.color["BLACK"], thickness=4, lineType=cv2.LINE_AA)
             # 67-323
-            cv2.rectangle(image, (pt0[0] + int(0 * self.block-2), pt0[1] - int(6  * self.block)), (pt0[0] + int(-13 * self.block), pt0[1] - int(-15 * self.block)), self.color["BLACK"], thickness=3, lineType=cv2.LINE_AA)
-            cv2.rectangle(image, (0                             , pt0[1] - int(15 * self.block)), (mapsize[0]                   , pt0[1] - int(7   * self.block)), self.color["BLACK"], thickness=3, lineType=cv2.LINE_AA)
+            cv2.rectangle(image, (pt0[0] + int(0 * self.block-2), pt0[1] - int(6  * self.block)), (pt0[0] + int(-13 * self.block), pt0[1] - int(-15 * self.block)), self.color["BLACK"], thickness=4, lineType=cv2.LINE_AA)
+            cv2.rectangle(image, (0                             , pt0[1] - int(15 * self.block)), (mapsize[0]                   , pt0[1] - int(7   * self.block)), self.color["BLACK"], thickness=4, lineType=cv2.LINE_AA)
             # show sensing point
             for p in senser_points:
-                cv2.drawMarker(image, p, (128,255,64), markerType=cv2.MARKER_TILTED_CROSS, markerSize=30, thickness=3, line_type=cv2.LINE_AA)
+                cv2.drawMarker(image, p, (32,32,32), markerType=cv2.MARKER_TILTED_CROSS, markerSize=30, thickness=5, line_type=cv2.LINE_AA)
 
         def draw_map(mapsize, rot_deg, filename):
             '''ファイル名を1つ指定して描画する'''
