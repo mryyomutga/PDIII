@@ -1,30 +1,32 @@
 # -*- coding: utf-8 -*-
-# Last Change : Fri 11 Jan 2019 18:12:01.
+# Last Change : Fri 25 Jan 2019 17:27:52.
 
 import time
 import pigpio
 
-# default Motor dir = 0
-#  wheel2           wheel3
-#         +-------+
-#         |       |   ^
-#     | - |       | - |
-#     v   |       |
-#         |       |   ^
-#     | - |       | - |
-#     v   |       |
-#         +-------+
-#  wheel1           wheel4
+# Motor1 param
+# PWM Pin   : 20
+# DIR Pin   : 26
+# Frequency : 1ms
+# duty      : 0
+# direction : 1 (Front)
 
 class Motor(object):
     """Motor Class"""
     pi = pigpio.pi("192.168.200.1")
-    def __init__(self, pwm_pin=20, dir_pin=26):
-        """constructor"""
+
+    """Constructor"""
+    def __init__(self, pwm_pin=20, dir_pin=26, freq=1000, duty=0, dir=1):
+        # set Raspberry Pi gpio pin number
         self.pwm_pin = pwm_pin
         self.dir_pin = dir_pin
         self.pi.set_mode(self.pwm_pin, pigpio.OUTPUT)
         self.pi.set_mode(self.dir_pin, pigpio.OUTPUT)
+
+        # set motor parameters
+        self.set_frequency(freq)
+        self.set_duty(duty)
+        self.set_direction(dir)
 
     """Setter"""
     def set_pwm_pin(self, pin):
@@ -41,7 +43,7 @@ class Motor(object):
         # 1ms
         self.pi.set_PWM_frequency(self.pwm_pin, freq)
 
-    def set_duty(self, duty=25):
+    def set_duty(self, duty=30):
         """set duty"""
         self.duty = duty
         # duty 10%
@@ -69,9 +71,9 @@ class Motor(object):
         """get duty"""
         return self.duty
 
-    def get_direction(self, direction=1):
+    def get_direction(self):
         """get direction"""
-        return direction
+        return self.direction
 
 if __name__ == '__main__':
     pass

@@ -1,65 +1,91 @@
 # -*- coding: utf-8 -*-
-# Last Change : Tue 22 Jan 2019 21:05:19.
+# Last Change : Fri 25 Jan 2019 17:39:21.
 
-import motor_control as ctl
+from motor import Motor
+# import motor_control as ctl
 from tkinter import *
 
-ct = ctl.MotorControl()
+# Motor object
+motor1 = Motor(20, 26, dir=1)
+motor2 = Motor(16, 19, dir=1)
+motor3 = Motor(12, 6 , dir=0)
+motor4 = Motor(18, 17, dir=0)
 
 fnt=("Noto Sans CJK JP", 14)
 
+# Stop all motors
 def motor_state(*args):
     if state.get():
-        ct.set_car_dutycycle(duty=[0,0,0,0])
+        # Stop
+        motor1.set_duty(0)
+        motor2.set_duty(0)
+        motor3.set_duty(0)
+        motor4.set_duty(0)
     else:
-        ct.set_car_dutycycle(
-                duty=[duty1.get(), duty2.get(),
-                      duty3.get(), duty4.get()
-                      ]
-                )
+        # Run
+        motor1.set_duty(duty1.get())
+        motor2.set_duty(duty2.get())
+        motor3.set_duty(duty3.get())
+        motor4.set_duty(duty4.get())
+
+# Switch motor direction
 def motor1_dir_callback(*args):
     if dir1.get() == True:
-        ct.set_wheel_direction(ct.wheel1, dir=0)
+        motor1.set_direction(0)
     else:
-        ct.set_wheel_direction(ct.wheel1, dir=1)
+        motor1.set_direction(1)
+
+    print("Motor1 dir :", motor1.get_direction())
 
 def motor2_dir_callback(*args):
     if dir2.get() == True:
-        ct.set_wheel_direction(ct.wheel2, dir=0)
+        motor2.set_direction(0)
     else:
-        ct.set_wheel_direction(ct.wheel2, dir=1)
+        motor2.set_direction(1)
+
+    print("Motor2 dir :", motor2.get_direction())
 
 def motor3_dir_callback(*args):
     if dir3.get() == True:
-        ct.set_wheel_direction(ct.wheel3, dir=1)
+        motor3.set_direction(1)
     else:
-        ct.set_wheel_direction(ct.wheel3, dir=0)
+        motor3.set_direction(0)
+
+    print("Motor3 dir :", motor3.get_direction())
 
 def motor4_dir_callback(*args):
     if dir4.get() == True:
-        ct.set_wheel_direction(ct.wheel4, dir=1)
+        motor4.set_direction(1)
     else:
-        ct.set_wheel_direction(ct.wheel4, dir=0)
+        motor4.set_direction(0)
 
+    print("Motor4 dir :", motor4.get_direction())
+
+# Change duty
+## don't move the if motor direction control checkbox is put a check mark.
 def motor1_duty_callback(*args):
     duty = duty1.get()
     if state.get() == False:
-        ct.set_wheel_dutycycle(wheel=ct.wheel1, duty=duty)
+        motor1.set_duty(duty)
+        print("Motor1 : duty", duty)
 
 def motor2_duty_callback(*args):
     duty = duty2.get()
     if state.get() == False:
-        ct.set_wheel_dutycycle(wheel=ct.wheel2, duty=duty)
+        motor2.set_duty(duty)
+        print("Motor2 : duty", duty)
 
 def motor3_duty_callback(*args):
     duty = duty3.get()
     if state.get() == False:
-        ct.set_wheel_dutycycle(wheel=ct.wheel3, duty=duty)
+        motor3.set_duty(duty)
+        print("Motor3 : duty", duty)
 
 def motor4_duty_callback(*args):
     duty = duty4.get()
     if state.get() == False:
-        ct.set_wheel_dutycycle(wheel=ct.wheel4, duty=duty)
+        motor4.set_duty(duty)
+        print("Motor4 : duty", duty)
 
 if __name__ == '__main__':
     myframe = Tk()
@@ -76,7 +102,6 @@ if __name__ == '__main__':
     f2.pack()
 
     ### SubFrames
-
     state = BooleanVar()
     state.set(True)
     Checkbutton(f0, text="Stop All Motors", font=fnt, variable=state, command=motor_state).pack()
@@ -98,7 +123,7 @@ if __name__ == '__main__':
     #### Motor3
     duty3 = IntVar()
     duty3.trace("w", motor3_duty_callback)
-    duty3.set(27)
+    duty3.set(30)
     dir3 = BooleanVar()
     dir3.trace("w", motor3_dir_callback)
     dir3.set(False)

@@ -1,31 +1,41 @@
 # -*- coding: utf-8 -*-
-# Last Change : Fri 18 Jan 2019 15:11:56.
+# Last Change : Fri 25 Jan 2019 17:37:19.
 
 import time
 import pigpio
 
 from motor import Motor  # import Motor class
 
-# default Motor dir = 0
-#  wheel2           wheel3
-#         +-------+
-#         |       |   ^
-#     | - |       | - |
-#     v   |       |
-#         |       |   ^
-#     | - |       | - |
-#     v   |       |
-#         +-------+
-#  wheel1           wheel4
+# Default parameter
+# Motor1:
+#     PWM Pin   : 20
+#     DIR Pin   : 26
+#     Duty      : 0
+#     Direction : 1
+# Motor2:
+#     PWM Pin   : 16
+#     DIR Pin   : 19
+#     Duty      : 0
+#     Direction : 1
+# Motor3:
+#     PWM Pin   : 12
+#     DIR Pin   : 6
+#     Duty      : 0
+#     Direction : 0
+# Motor4:
+#     PWM Pin   : 18
+#     DIR Pin   : 17
+#     Duty      : 0
+#     Direction : 0
 
 class MotorControl(object):
     def __init__(self):
         """MotorControl constructor"""
-        self.wheel1 = Motor(20, 26)
-        self.wheel2 = Motor(16, 19)
-        self.wheel3 = Motor(12, 6 )
-        self.wheel4 = Motor(18, 17)
-        self.set_car_frequency()
+        self.wheel1 = Motor(20, 26, duty=0, freq=1000, dir=1)
+        self.wheel2 = Motor(16, 19, duty=0, freq=1000, dir=1)
+        self.wheel3 = Motor(12, 6 , duty=0, freq=1000, dir=0)
+        self.wheel4 = Motor(18, 17, duty=0, freq=1000, dir=0)
+        # self.set_car_frequency()
 
     def set_wheel_frequency(self, wheel, freq=1000):
         """set wheel frequency
@@ -179,53 +189,58 @@ class MotorControl(object):
         self.wheel3.set_duty(0)
         self.wheel4.set_duty(0)
 
-    def demo_action(self, delay=3):
+    def demo_action(self, delay=3, wait=1):
+        """demo action"""
         self.go_ahead()
         time.sleep(delay)
         self.stop_motor()
-        time.sleep(delay)
-        
+        time.sleep(wait)
+
         self.go_back()
         time.sleep(delay)
         self.stop_motor()
-        time.sleep(delay)
-        
+        time.sleep(wait)
+
         self.go_left()
         time.sleep(delay)
         self.stop_motor()
-        time.sleep(delay)
-        
+        time.sleep(wait)
+
         self.go_right()
         time.sleep(delay)
         self.stop_motor()
-        time.sleep(delay)
-        
+        time.sleep(wait)
+
         self.go_upperleft()
         time.sleep(delay)
         self.stop_motor()
-        time.sleep(delay)
-        
+        time.sleep(wait)
+
         self.go_lowerright()
         time.sleep(delay)
         self.stop_motor()
-        time.sleep(delay)
-        
+        time.sleep(wait)
+
         self.go_upperright()
         time.sleep(delay)
         self.stop_motor()
-        time.sleep(delay)
-        
+        time.sleep(wait)
+
         self.go_lowerleft()
         time.sleep(delay)
         self.stop_motor()
-        time.sleep(delay)
-        
+        time.sleep(wait)
+
         self.turn_left()
         time.sleep(delay)
         self.stop_motor()
-        time.sleep(delay)
-        
+        time.sleep(wait)
+
         self.turn_right()
         time.sleep(delay)
         self.stop_motor()
-        time.sleep(delay)
+        time.sleep(wait)
+
+if __name__ == "__main__":
+    ctl = MotorControl()
+    ctl.demo_action(delay=1.5)
