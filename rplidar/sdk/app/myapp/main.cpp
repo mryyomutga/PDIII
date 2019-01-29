@@ -75,7 +75,7 @@ void *scanDataThread(void *arg) {
     scanf("%s", client_addr);
     printf("====================================\n");
 
-    wait_set_ip = false;
+    // wait_set_ip = false;
 
     int sock              = socket(AF_INET, SOCK_DGRAM, 0); // IPv4 UDP socket
     struct sockaddr_in sa = {0};
@@ -83,7 +83,7 @@ void *scanDataThread(void *arg) {
     sa.sin_port           = htons(8888);                    // Port:8888
     sa.sin_addr.s_addr    = inet_addr(client_addr);         // Address
 
-    char buffer[2048];                                      // 送信データバッファ
+    char buffer[1024];                                      // 送信データバッファ
     // RPLIDARのモーター駆動開始(stopしないとプログラム終了後も回転し続ける)
     drv->startMotor();
     // スキャンの開始
@@ -97,29 +97,31 @@ void *scanDataThread(void *arg) {
 
         if(IS_OK(op_result)) {
             drv->ascendScanData(nodes, count);
-            for(int i = 0; i < (int)count; i++) {
-                float angle = (nodes[i].angle_q6_checkbit >> RPLIDAR_RESP_MEASUREMENT_ANGLE_SHIFT) / 64.0f;
-                float range = nodes[i].distance_q2 / 4.0f;
-                float radian = (M_PI / 180.0) * theta;
+            for(int idx = 0; idx < (int)count; idx++) {
+                float angle = (nodes[idx].angle_q6_checkbit >> RPLIDAR_RESP_MEASUREMENT_ANGLE_SHIFT) / 64.0f;
+                float range = nodes[idx].distance_q2 / 4.0f;
+                float radian = (M_PI / 180.0) * angle;
                 float x = range * cos(radian);
                 float y = range * sin(radian);
 
                 // JSONのフォーマット
-                sprintf(buffer,"{\"range\":%.2f,\"angle\":%.2f,\"x\":%f,\"y\":%f,\"radian\":%f}",
+                sprintf(buffer,"{\"idx\":%d,\"range\":%.4f,\"angle\":%.4f,\"radian\":%.4f,\"x\":%f,\"y\":%f}",
+                        idx,
                         range,
                         angle,
-                        x, y,
-                        radian
-                );
+                        radian,
+                        x, y
+                        );
 
                 if(dp_on)
-                    fprintf(stderr, "%d\n", i);   // エラー出力
+                    fprintf(stderr, "%d\n", idx);   // エラー出力
                 // JSONを送信
                 sendto(sock, buffer, strlen(buffer), 0, (struct sockaddr *)&sa, sizeof(sa));
                 memset(buffer,'\0', sizeof(buffer));    // bufferをクリア
             }
         }
     }
+    sendto(sock, "END", strlen("END"), 0, (struct sockaddr *)&sa, sizeof(sa));
     close(sock);
     return NULL;
 }
@@ -135,8 +137,7 @@ int main(int argc, const char * argv[]){
     // SIGINTシグナルをキャッチしたらctrlcハンドラを走らせる
     signal(SIGINT, ctrlc);
 
-    printf("LIDAR data grabber for RPLIDAR.\n"
-           "Version : " RPLIDAR_SDK_VERSION "\n");
+    printf("LIDAR data grabber for RPLIDAR.\nVersion : " RPLIDAR_SDK_VERSION "\n");
 
         /*
          * オプションのチェック
