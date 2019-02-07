@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Last Change : Fri 25 Jan 2019 17:39:21.
+# Last Change : Tue 29 Jan 2019 17:45:39.
 
 from motor import Motor
 # import motor_control as ctl
@@ -11,6 +11,7 @@ motor2 = Motor(16, 19, dir=1)
 motor3 = Motor(12, 6 , dir=0)
 motor4 = Motor(18, 17, dir=0)
 
+# font
 fnt=("Noto Sans CJK JP", 14)
 
 # Stop all motors
@@ -110,7 +111,7 @@ if __name__ == '__main__':
     #### Motor2
     duty2 = IntVar()
     duty2.trace("w", motor2_duty_callback)
-    duty2.set(27)
+    duty2.set(0)
     dir2 = BooleanVar()
     dir2.trace("w", motor2_dir_callback)
     dir2.set(False)
@@ -123,7 +124,7 @@ if __name__ == '__main__':
     #### Motor3
     duty3 = IntVar()
     duty3.trace("w", motor3_duty_callback)
-    duty3.set(30)
+    duty3.set(0)
     dir3 = BooleanVar()
     dir3.trace("w", motor3_dir_callback)
     dir3.set(False)
@@ -137,7 +138,7 @@ if __name__ == '__main__':
     #### Motor1
     duty1 = IntVar()
     duty1.trace("w", motor1_duty_callback)
-    duty1.set(30)
+    duty1.set(0)
     dir1 = BooleanVar()
     dir1.trace("w", motor1_dir_callback)
     dir1.set(False)
@@ -150,7 +151,7 @@ if __name__ == '__main__':
     #### Motor4
     duty4 = IntVar()
     duty4.trace("w", motor4_duty_callback)
-    duty4.set(30)
+    duty4.set(0)
     dir4 = BooleanVar()
     dir4.trace("w", motor4_dir_callback)
     dir4.set(False)
