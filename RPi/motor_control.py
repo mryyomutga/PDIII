@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# Last Change : Fri 25 Jan 2019 17:37:19.
+# Last Change : Thu 07 Feb 2019 18:50:50.
 
 import time
 import pigpio
@@ -9,7 +9,7 @@ from motor import Motor  # import Motor class
 # Default parameter
 # Motor1:
 #     PWM Pin   : 20
-#     DIR Pin   : 26
+#     DIR Pin   : 27
 #     Duty      : 0
 #     Direction : 1
 # Motor2:
@@ -123,7 +123,7 @@ class MotorControl(object):
         """go back"""
         print("go back [0, 0, 1, 1]")
         self.set_car_direction(dir=[0, 0, 1, 1])
-        self.set_car_dutycycle()
+        self.set_car_dutycycle([30, 27, 30, 30])
         self.set_car_frequency()
 
     def go_left(self):
@@ -243,4 +243,4 @@ class MotorControl(object):
 
 if __name__ == "__main__":
     ctl = MotorControl()
-    ctl.demo_action(delay=1.5)
+    ctl.demo_action(delay=2)
